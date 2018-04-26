@@ -1,4 +1,5 @@
 library(ggplot2)
+
 output = read.csv(file = 'sampleoutput/output-0percent.csv', head = TRUE, sep = ',')
 
 for (agent_type in levels(output$Agent.Type)) {
@@ -26,12 +27,6 @@ for (i in 1:200) {
   besttime <- min(Times)
   q_learning = c(q_learning, besttime)
 }
-qplot(q_learning,
-      main = "25000 total reward: 200 Q-Learning Agents",
-      xlab = 'Time-step',
-      ylab = 'Frequency',
-      fill=I("white"),
-      col=I("black"))
 
 
 
@@ -44,13 +39,6 @@ for (i in 201:400) {
   besttime <- min(Times)
   sarsa = c(sarsa, besttime)
 }
-qplot(sarsa,
-      main = "25000 total reward: 200 SARSA Agents",
-      xlab = 'Time-step',
-      ylab = 'Frequency',
-      fill=I("white"),
-      col=I("black"))
-
 
 
 
@@ -62,12 +50,6 @@ for (i in 401:600) {
   besttime <- min(Times)
   expected_sarsa = c(expected_sarsa, besttime)
 }
-qplot(expected_sarsa,
-      main = "25000 total reward: 200 Expected-SARSA Agents",
-      xlab = 'Time-step',
-      ylab = 'Frequency',
-      fill=I("white"),
-      col=I("black"))
 
 
 
@@ -79,9 +61,37 @@ for (i in 601:800) {
   besttime <- min(Times)
   qv_learning = c(qv_learning, besttime)
 }
-qplot(qv_learning,
-      main = "25000 total reward: 200 QV-Learning Agents",
-      xlab = 'Time-step',
-      ylab = 'Frequency',
-      fill=I("white"),
-      col=I("black"))
+
+qplot(q_learning,geom='freqpoly')
+
+qplot <- c()
+qplot$group[1:200] <- "q-learning"
+qplot$val <- q_learning
+q<- cbind(qplot$group,qplot$val)
+
+qvplot <- c()
+qvplot$group[1:200] <- "qv-learning"
+qvplot$val <- qv_learning
+qv<- cbind(qvplot$group,qvplot$val)
+
+esarsaplot <- c()
+esarsaplot$group[1:200] <- "expected_sarsa"
+esarsaplot$val <- expected_sarsa
+sar1<-cbind(esarsaplot$group,esarsaplot$val)
+
+sarsaplot <- c()
+sarsaplot$group[1:200] <- "sarsa"
+sarsaplot$val <- sarsa
+sar2<- cbind(sarsaplot$group,sarsaplot$val)
+
+
+ggdf<-rbind(sar1,sar2,q,qv)
+ggdf <- data.frame(ggdf)
+colnames(ggdf) <- c("type","time")
+ggdf$time<- as.numeric(as.character(ggdf$time))
+
+ggplot(ggdf,aes(x=time,fill=as.factor(type), color=type)) +geom_freqpoly(bins=25) + theme_classic()
+
+
+
+       

@@ -22,7 +22,10 @@ for(i in 1:200){
   besttime<-min(Times)
   q_learning=c(q_learning,besttime)
 }
-hist(q_learning)
+hist(q_learning,
+     main="25000 total reward: 200 Q-Learning Agents",
+     xlab='Time-step',
+     breaks=20)
 
 
 
@@ -34,7 +37,11 @@ for(i in 201:400){
   besttime<-min(Times)
   sarsa=c(sarsa,besttime)
 }
-hist(sarsa)
+hist(sarsa,
+     main="25000 total reward: 200 SARSA Agents",
+     xlab='Time-step',
+     breaks=20)
+
 
 
 expected_sarsa<-c()
@@ -45,7 +52,11 @@ for(i in 401:600){
   besttime<-min(Times)
   expected_sarsa=c(expected_sarsa,besttime)
 }
-hist(expected_sarsa)
+hist(expected_sarsa,
+     main="25000 total reward: 200 Expected-SARSA Agents",
+     xlab='Time-step',
+     breaks=20)
+
 
 
 qv_learning<-c()
@@ -56,4 +67,7 @@ for(i in 601:800){
   besttime<-min(Times)
   qv_learning=c(qv_learning,besttime)
 }
-hist(qv_learning)
+hist(qv_learning,
+     main="25000 total reward: 200 QV-Learning Agents",
+     xlab='Time-step',
+     breaks=20)

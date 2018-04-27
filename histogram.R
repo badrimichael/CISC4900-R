@@ -44,7 +44,8 @@ qplot(q_learning_0,
       xlab = 'Time-step',
       ylab = 'Frequency',
       fill=I("white"),
-      col=I("black"))
+      col=I("black"),
+      bins = 20)
 
 
 
@@ -61,7 +62,8 @@ qplot(sarsa_0,
       xlab = 'Time-step',
       ylab = 'Frequency',
       fill=I("white"),
-      col=I("black"))
+      col=I("black"),
+      bins = 20)
 
 
 
@@ -79,7 +81,8 @@ qplot(expected_sarsa_0,
       xlab = 'Time-step',
       ylab = 'Frequency',
       fill=I("white"),
-      col=I("black"))
+      col=I("black"),
+      bins = 20)
 
 
 
@@ -98,7 +101,8 @@ qplot(qv_learning_0,
       xlab = 'Time-step',
       ylab = 'Frequency',
       fill=I("white"),
-      col=I("black"))
+      col=I("black"),
+      bins = 20)
 
 i = 1
 q_learning_10 <- c()
@@ -114,7 +118,8 @@ qplot(q_learning_10,
       xlab = 'Time-step',
       ylab = 'Frequency',
       fill=I("white"),
-      col=I("black"))
+      col=I("black"),
+      bins = 20)
 
 
 
@@ -131,7 +136,8 @@ qplot(sarsa_10,
       xlab = 'Time-step',
       ylab = 'Frequency',
       fill=I("white"),
-      col=I("black"))
+      col=I("black"),
+      bins = 20)
 
 
 
@@ -149,13 +155,14 @@ qplot(expected_sarsa_10,
       xlab = 'Time-step',
       ylab = 'Frequency',
       fill=I("white"),
-      col=I("black"))
+      col=I("black"),
+      bins = 20)
 
 
 
 qv_learning_10 <- c()
 for (i in 601:800) {
-  sub = qv_agents_0[qv_agents_10$Agent == i, ]
+  sub = qv_agents_10[qv_agents_10$Agent == i, ]
   sub2 = sub[sub$Reward == reward_value, ]
   Times = sub2$Time[!is.na(sub2$Time)]
   besttime <- min(Times)
@@ -166,6 +173,7 @@ qplot(qv_learning_10,
       xlab = 'Time-step',
       ylab = 'Frequency',
       fill=I("white"),
-      col=I("black"))
+      col=I("black"),
+      bins = 20)
 
 

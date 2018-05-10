@@ -1,9 +1,24 @@
+# Project Title: Simulations of Reinforcement Learning in an Ecological Task
+# Name: Michael Badri, Brooklyn College Department of Computer and Information Science
+# Supervisor: Dr. Stefano Ghirlanda, Brooklyn College Department of Psychology
+
+# The goal of this project is to simulate the ecological task of behavior chaining using reinforcement learning
+# algorithms.
+
+# This R script takes the output files from the corresponding Python program 
+# (https://github.com/badrimichael/CISC4900) and generates a frequency polygon for each file.
+# Upon script completion, output will be 2 (Two) frequency polygons.
+# Note: THE FILES MUST BE RENAMED ACCORDINGLY.
+
+# This script requires ggplot2 package.
 library(ggplot2)
 
+# Read the two output files into the environment and specify the reward value.
 output_0 = read.csv(file = 'sampleoutput/output500-0percent.csv', head = TRUE, sep = ',')
 output_10 = read.csv(file = 'sampleoutput/output500-10percent.csv', head = TRUE, sep = ',')
 reward_value = 25000
 
+# Divide the output files into multiple dataframes, one per agent type.
 for (agent_type in levels(output_0$Agent.Type)) {
   write.csv(subset(output_0, Agent.Type == agent_type),
             paste(agent_type,'0', sep=" "),
@@ -26,9 +41,11 @@ sarsa_agents_10 = read.csv(file = 'SARSA 10', head = TRUE, sep = ',')
 expected_sarsa_agents_10 = read.csv(file = 'Expected SARSA 10', head = TRUE, sep =',')
 qv_agents_10 = read.csv(file = 'QV-learning 10', head = TRUE, sep = ',')
 
+# Automatically determine the total number of agents and number of agents per dataframe.
 agents_per_list = max(q_agents_0$Agent)
 total_num_of_agents = max(qv_agents_0$Agent)
 
+# Create a list of agents and the timestep they recieved reward_value.
 i = 1
 q_learning_0 <- c()
 for (i in 1:agents_per_list) {
@@ -105,6 +122,7 @@ for (i in (total_num_of_agents-agents_per_list+1):total_num_of_agents)  {
   qv_learning_10 = c(qv_learning_10, besttime)
 }
 
+# Combine the lists.
 qplot_0 <- c()
 qplot_0$group[1:agents_per_list] <- "q-learning"
 qplot_0$val <- q_learning_0
@@ -157,6 +175,7 @@ ggdf_10 <- data.frame(ggdf_10)
 colnames(ggdf_10) <- c("type","time")
 ggdf_10$time<- as.numeric(as.character(ggdf_10$time))
 
+# Plot both lists on a frequency polygon.
 ggplot(ggdf_0,aes(x=time,fill=as.factor(type), color=type)) +geom_freqpoly(bins=20) + theme_classic() + ggtitle(paste(reward_value,"total reward:", agents_per_list, "of Each Agent (0 percent)", sep = " "))
 
 ggplot(ggdf_10,aes(x=time,fill=as.factor(type), color=type)) + geom_freqpoly(bins=20) + theme_classic() + ggtitle(paste(reward_value,"total reward:", agents_per_list, "of Each Agent (10 percent)", sep = " "))

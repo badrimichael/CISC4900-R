@@ -1,9 +1,24 @@
+# Project Title: Simulations of Reinforcement Learning in an Ecological Task
+# Name: Michael Badri, Brooklyn College Department of Computer and Information Science
+# Supervisor: Dr. Stefano Ghirlanda, Brooklyn College Department of Psychology
+
+# The goal of this project is to simulate the ecological task of behavior chaining using reinforcement learning
+# algorithms.
+
+# This R script takes the output files from the corresponding Python program 
+# (https://github.com/badrimichael/CISC4900) and generates a histogram for each learning algorithm
+# for each output file. Upon completion, output will be 8 (Eight) histograms.
+# Note: THE FILES MUST BE RENAMED ACCORDINGLY.
+
+# This script requires ggplot2 package.
 library(ggplot2)
 
+# Read the two output files into the environment and specify the reward value.
 output_0 = read.csv(file = 'sampleoutput/output500-0percent.csv', head = TRUE, sep = ',')
 output_10 = read.csv(file = 'sampleoutput/output500-10percent.csv', head = TRUE, sep = ',')
 reward_value = 25000
 
+# Divide the output files into multiple dataframes, one per agent type.
 for (agent_type in levels(output_0$Agent.Type)) {
   write.csv(subset(output_0, Agent.Type == agent_type),
             paste(agent_type,'0', sep=" "),
@@ -29,6 +44,7 @@ qv_agents_10 = read.csv(file = 'QV-learning 10', head = TRUE, sep = ',')
 agents_per_list = max(q_agents_0$Agent)
 total_num_of_agents = max(qv_agents_0$Agent)
 
+# Create a list of agents and the timestep they recieved reward_value.
 i = 1
 q_learning_0 <- c()
 for (i in 1:agents_per_list) {
@@ -103,6 +119,7 @@ for (i in (total_num_of_agents-agents_per_list+1):total_num_of_agents) {
   qv_learning_10 = c(qv_learning_10, besttime)
 }
 
+# Plot histograms.
 qplot(q_learning_0,
       main = paste(reward_value,"total reward:", agents_per_list, "Q-Learning Agents (0 percent)", sep = " "),
       xlab = 'Time-step',

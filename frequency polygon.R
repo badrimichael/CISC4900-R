@@ -14,9 +14,9 @@
 library(ggplot2)
 
 # Read the two output files into the environment and specify the reward value.
-output_0 = read.csv(file = 'sampleoutput/output500-0percent.csv', head = TRUE, sep = ',')
-output_10 = read.csv(file = 'sampleoutput/output500-10percent.csv', head = TRUE, sep = ',')
-reward_value = 25000
+output_0 = read.csv(file = 'sampleoutput/output-0percent.csv', head = TRUE, sep = ',')
+output_10 = read.csv(file = 'sampleoutput/output-10percent.csv', head = TRUE, sep = ',')
+reward_value = 8000
 
 # Divide the output files into multiple dataframes, one per agent type.
 for (agent_type in levels(output_0$Agent.Type)) {
